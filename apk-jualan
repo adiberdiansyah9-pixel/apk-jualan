@@ -1,0 +1,102 @@
+apk-jualan/
+│── index.html        (login)
+│── admin.html        (admin panel)
+│── shop.html         (toko)
+│── cart.html         (keranjang)
+│── pay.html          (QRIS)
+│── style.css
+│── firebase.js
+│── auth.js
+│── shop.js
+│── cart.js
+  body {
+  background:black;
+  color:#00ff00;
+  font-family: monospace;
+}
+
+.card {
+  border:1px solid #00ff00;
+  margin:10px;
+  padding:10px;
+  box-shadow:0 0 15px #00ff00;
+}
+
+button {
+  background:black;
+  color:#00ff00;
+  border:1px solid #00ff00;
+  padding:10px;
+  cursor:pointer;
+}
+
+input {
+  background:black;
+  color:#00ff00;
+  border:1px solid #00ff00;
+  padding:8px;
+}
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth } from 
+"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getDatabase } from 
+"https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "API_KEY",
+  authDomain: "PROJECT.firebaseapp.com",
+  databaseURL: "https://PROJECT.firebaseio.com",
+  projectId: "PROJECT",
+};
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getDatabase(app);
+<h2>ADMIN LOGIN</h2>
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">LOGIN</button>
+
+<script type="module" src="auth.js"></script>
+  // auth.js
+import { auth } from "./firebase.js";
+import { signInWithEmailAndPassword } from
+"https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+window.login = function(){
+  signInWithEmailAndPassword(
+    auth,
+    email.value,
+    password.value
+  ).then(()=>{
+    location.href="admin.html";
+  }).catch(err=>alert(err.message));
+}
+<div class="card">
+<h3>APK Premium</h3>
+<p>Rp50.000</p>
+<button onclick="addCart('APK Premium',50000)">
+Tambah
+</button>
+</div>
+  <h2>KERANJANG</h2>
+<div id="list"></div>
+<a href="pay.html"><button>Bayar QRIS</button></a>
+
+<script src="cart.js"></script>
+  let cart = JSON.parse(localStorage.getItem("cart"));
+cart.forEach(p=>{
+  list.innerHTML += `<p>${p.nama} - Rp${p.harga}</p>`;
+});
+<h2>SCAN QRIS</h2>
+<img src="qris.png" width="250">
+<p>Upload bukti pembayaran ke Admin</p>
+<button onclick="alert('Menunggu Konfirmasi')">
+Saya Sudah Bayar
+</button>
+orders
+ └── order_id
+     ├── produk
+     ├── total
+     ├── status
